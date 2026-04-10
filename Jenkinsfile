@@ -36,45 +36,37 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                dir('05-target-demo') {
-                    sh '''
-                        set -e
-                        terraform init -reconfigure
-                    '''
-                }
+                sh '''
+                    set -e
+                    terraform init -reconfigure
+                '''
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                dir('05-target-demo') {
-                    sh '''
-                        set -e
-                        terraform plan
-                    '''
-                }
+                sh '''
+                    set -e
+                    terraform plan
+                '''
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                dir('05-target-demo') {
-                    sh '''
-                        set -e
-                        terraform apply -auto-approve
-                    '''
-                }
+                sh '''
+                    set -e
+                    terraform apply -auto-approve
+                '''
             }
         }
 
         stage('Terraform Output') {
             steps {
-                dir('05-target-demo') {
-                    sh '''
-                        set -e
-                        terraform output
-                    '''
-                }
+                sh '''
+                    set -e
+                    terraform output
+                '''
             }
         }
     }
