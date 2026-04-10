@@ -1,7 +1,11 @@
-resource "aws_s3_bucket" "demo_bucket" {
-  bucket = "my-target-demo-bucket-769187177925"
+resource "aws_s3_bucket" "demo" {
+  bucket = var.bucket_name
+}
 
-  tags = {
-    Name = "demo-bucket"
+resource "aws_s3_bucket_versioning" "demo_versioning" {
+  bucket = aws_s3_bucket.demo.id
+
+  versioning_configuration {
+    status = "Enabled"
   }
 }

@@ -12,27 +12,69 @@ pipeline {
             }
         }
 
+        stage('Tool Check') {
+            steps {
+                sh '''
+                    set -e
+                    pwd
+                    ls -al
+                    git --version
+                    aws --version
+                    terraform version
+                '''
+            }
+        }
+
         stage('Check Identity') {
             steps {
-                sh 'aws sts get-caller-identity'
+                sh '''
+                    set -e
+                    aws sts get-caller-identity
+                '''
             }
         }
 
         stage('Terraform Init') {
             steps {
-                sh 'terraform init'
+                dir('05-target-demo') {
+                    sh '''
+                        set -e
+                        terraform init -reconfigure
+                    '''
+                }
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan'
+                dir('05-target-demo') {
+                    sh '''
+                        set -e
+                        terraform plan
+                    '''
+                }
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                sh 'terraform apply -auto-approve'
+                dir('05-target-demo') {
+                    sh '''
+                        set -e
+                        terraform apply -auto-approve
+                    '''
+                }
+            }
+        }
+
+        stage('Terraform Output') {
+            steps {
+                dir('05-target-demo') {
+                    sh '''
+                        set -e
+                        terraform output
+                    '''
+                }
             }
         }
     }
