@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "tools-infra-tfstate-132673011871"
+    bucket         = "tools-jenkins-tfstate-132673011871"
     key            = "target-demo/terraform.tfstate"
     region         = "ap-northeast-2"
     encrypt        = true
